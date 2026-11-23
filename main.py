@@ -17,6 +17,12 @@ ENTRY = (
 
 
 def main() -> None:
+    if "\n" in ENTRY or "\r" in ENTRY:
+        raise ValueError("ENTRY must be exactly one line")
+    if len(ENTRY) > 200:
+        raise ValueError(
+            f"ENTRY is {len(ENTRY)} characters, over the 200-character cap"
+        )
     out_dir = os.environ.get("MAKEFUN_OUTPUT_DIR", "out")
     os.makedirs(out_dir, exist_ok=True)
     path = os.path.join(out_dir, "entry.txt")
